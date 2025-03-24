@@ -30,6 +30,11 @@ class User(Base):
     created_at = Column(BigInteger)
 
     api_key = Column(String, nullable=True, unique=True)
+    near_pk = Column(String, nullable=True, unique=True)
+    near_acc = Column(String, nullable=True, unique=True)
+    zec_words = Column(String, nullable=True, unique=True)
+    zec_birthday = Column(BigInteger, nullable=True)
+
     settings = Column(JSONField, nullable=True)
     info = Column(JSONField, nullable=True)
 
@@ -54,6 +59,11 @@ class UserModel(BaseModel):
     created_at: int  # timestamp in epoch
 
     api_key: Optional[str] = None
+    near_pk: Optional[str] = None
+    near_acc: Optional[str] = None
+    zec_words: Optional[str] = None
+    zec_birthday: Optional[int] = None
+
     settings: Optional[UserSettings] = None
     info: Optional[dict] = None
 
@@ -329,6 +339,24 @@ class UsersTable:
         with get_db() as db:
             users = db.query(User).filter(User.id.in_(user_ids)).all()
             return [user.id for user in users]
+
+    def update_user_near_pk_by_id(self, id: str, near_pk: str) -> str:
+            try:
+                with get_db() as db:
+                    result = db.query(User).filter_by(id=id).update({"near_pk": near_pk})
+                    db.commit()
+                    return True if result == 1 else False
+            except Exception:
+                return False
+
+    def update_user_zec_words_by_id(self, id: str, zec_words: str) -> str:
+                try:
+                    with get_db() as db:
+                        result = db.query(User).filter_by(id=id).update({"zec_words": zec_words})
+                        db.commit()
+                        return True if result == 1 else False
+                except Exception:
+                    return False
 
 
 Users = UsersTable()

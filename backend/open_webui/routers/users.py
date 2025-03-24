@@ -325,3 +325,75 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user)):
         status_code=status.HTTP_403_FORBIDDEN,
         detail=ERROR_MESSAGES.ACTION_PROHIBITED,
     )
+
+
+############################
+# WALLETS
+############################
+
+
+class UserWallet(BaseModel):
+    near_acc: Optional[str] = None
+    zec_wallet: Optional[str] = None
+    near_pk: Optional[str] = None
+    zec_words: Optional[str] = None
+    zec_birthday: Optional[str] = None
+
+@router.get("/{user_id}/wallets", response_model=UserWallet)
+async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
+    # Check if user_id is a shared chat
+    # If it is, get the user_id from the chat
+    if user_id.startswith("shared-"):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ERROR_MESSAGES.USER_NOT_FOUND,
+            )
+
+    user = Users.get_user_by_id(user_id)
+
+    if user:
+        return UserWallet(
+            **{
+                "near_acc": user.near_acc,
+                "zec_wallet": "WALLET ZEC",
+                "near_pk": user.near_pk,
+                "zec_words": user.zec_words,
+                "zec_birthday": user.zec_birthday
+            }
+        )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.USER_NOT_FOUND,
+        )
+
+@router.post("/{user_id}/wallets/update", response_model=Optional[UserWallet])
+async def update_user_wallets_by_id(
+    user_id: str,
+    form_data: UserWallet,
+    session_user=Depends(get_admin_user),
+):
+    user = Users.get_user_by_id(user_id)
+
+    if user:
+        if form_data.near_pk.lower() != user.near_pk:
+            near_pk_updated = Users.update_user_near_pk_by_id(user.id, form_data.near_pk.lower())
+            if not near_pk_updated:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ERROR_MESSAGES.USER_NOT_FOUND,
+                )
+        if form_data.zec_words.lower() != user.zec_words:
+            zec_words_updated = Users.update_user_zec_words_by_id(user.id, form_data.zec_words.lower())
+            if not zec_words_updated:
+               raise HTTPException(
+                   status_code=status.HTTP_400_BAD_REQUEST,
+                   detail=ERROR_MESSAGES.USER_NOT_FOUND,
+               )
+        # TODO: devo restituire i nuovi wallet pubblici
+        return form_data
+
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail=ERROR_MESSAGES.USER_NOT_FOUND,
+    )

@@ -363,3 +363,68 @@ export const updateUserById = async (token: string, userId: string, user: UserUp
 
 	return res;
 };
+
+
+export const getUserWallets = async (token: string, userId: string) => {
+	let error = null;
+	const res = await fetch(`${WEBUI_API_BASE_URL}/users/${userId}/wallets`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		}
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			console.log(err);
+			error = err.detail;
+			return null;
+		});
+
+	if (error) {
+		throw error;
+	}
+
+	return res;
+};
+
+
+type UserWalletUpdateForm = {
+	near_pk: string;
+	zec_words: string;
+};
+
+export const updateUserWalletsById = async (token: string, userId: string, user: UserWalletUpdateForm) => {
+	let error = null;
+
+	const res = await fetch(`${WEBUI_API_BASE_URL}/users/${userId}/wallets/update`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		},
+		body: JSON.stringify({
+			near_pk: user.near_pk,
+			zec_words: user.zec_words,
+		})
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			console.log(err);
+			error = err.detail;
+			return null;
+		});
+
+	if (error) {
+		throw error;
+	}
+
+	return res;
+};
+
