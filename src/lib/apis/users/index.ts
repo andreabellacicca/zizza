@@ -395,6 +395,8 @@ export const getUserWallets = async (token: string, userId: string) => {
 type UserWalletUpdateForm = {
 	near_pk: string;
 	zec_words: string;
+	near_acc: string;
+	zec_birthday: Number
 };
 
 export const updateUserWalletsById = async (token: string, userId: string, user: UserWalletUpdateForm) => {
@@ -409,6 +411,8 @@ export const updateUserWalletsById = async (token: string, userId: string, user:
 		body: JSON.stringify({
 			near_pk: user.near_pk,
 			zec_words: user.zec_words,
+			near_acc: user.near_acc,
+			zec_birthday: user.zec_birthday
 		})
 	})
 		.then(async (res) => {
@@ -428,3 +432,27 @@ export const updateUserWalletsById = async (token: string, userId: string, user:
 	return res;
 };
 
+export const createZCashWord = async (token: string) => {
+	let error = null;
+
+	const res = await fetch(`${WEBUI_API_BASE_URL}/users/wallets/words`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		}
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			console.log(err);
+			error = err.detail;
+			return null;
+		});
+	if (error) {
+		throw error;
+	}
+	return res.zec_words;
+};

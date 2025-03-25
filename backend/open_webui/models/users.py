@@ -340,19 +340,19 @@ class UsersTable:
             users = db.query(User).filter(User.id.in_(user_ids)).all()
             return [user.id for user in users]
 
-    def update_user_near_pk_by_id(self, id: str, near_pk: str) -> str:
+    def update_user_near_pk_by_id(self, id: str, near_pk: str, near_acc: str) -> str:
             try:
                 with get_db() as db:
-                    result = db.query(User).filter_by(id=id).update({"near_pk": near_pk})
+                    result = db.query(User).filter_by(id=id).update({"near_pk": near_pk, "near_acc":near_acc})
                     db.commit()
                     return True if result == 1 else False
             except Exception:
                 return False
 
-    def update_user_zec_words_by_id(self, id: str, zec_words: str) -> str:
+    def update_user_zec_words_by_id(self, id: str, zec_words: str, zec_birthday: int) -> str:
                 try:
                     with get_db() as db:
-                        result = db.query(User).filter_by(id=id).update({"zec_words": zec_words})
+                        result = db.query(User).filter_by(id=id).update({"zec_words": zec_words, "zec_birthday": zec_birthday})
                         db.commit()
                         return True if result == 1 else False
                 except Exception:

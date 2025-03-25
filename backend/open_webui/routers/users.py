@@ -19,6 +19,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel
 from open_webui.utils.auth import get_admin_user, get_password_hash, get_verified_user
 
+from mnemonic import Mnemonic
+
+
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
 
@@ -337,7 +340,7 @@ class UserWallet(BaseModel):
     zec_wallet: Optional[str] = None
     near_pk: Optional[str] = None
     zec_words: Optional[str] = None
-    zec_birthday: Optional[str] = None
+    zec_birthday: Optional[int] = None
 
 @router.get("/{user_id}/wallets", response_model=UserWallet)
 async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
@@ -349,9 +352,9 @@ async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
                 detail=ERROR_MESSAGES.USER_NOT_FOUND,
             )
 
-    user = Users.get_user_by_id(user_id)
+    user_found = Users.get_user_by_id(user_id)
 
-    if user:
+    if user_found.id == user.id:
         return UserWallet(
             **{
                 "near_acc": user.near_acc,
@@ -371,20 +374,20 @@ async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
 async def update_user_wallets_by_id(
     user_id: str,
     form_data: UserWallet,
-    session_user=Depends(get_admin_user),
+    user=Depends(get_verified_user)
 ):
-    user = Users.get_user_by_id(user_id)
-
-    if user:
-        if form_data.near_pk.lower() != user.near_pk:
-            near_pk_updated = Users.update_user_near_pk_by_id(user.id, form_data.near_pk.lower())
+    user_found = Users.get_user_by_id(user_id)
+    print(f"Form data: {form_data}")
+    if user_found.id == user.id:
+        if form_data.near_pk.lower() != user.near_pk or form_data.near_acc != user.near_acc:
+            near_pk_updated = Users.update_user_near_pk_by_id(user.id, form_data.near_pk.lower(), form_data.near_acc)
             if not near_pk_updated:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
                     detail=ERROR_MESSAGES.USER_NOT_FOUND,
                 )
-        if form_data.zec_words.lower() != user.zec_words:
-            zec_words_updated = Users.update_user_zec_words_by_id(user.id, form_data.zec_words.lower())
+        if form_data.zec_words.lower() != user.zec_words or form_data.zec_birthday!=user.zec_birthday:
+            zec_words_updated = Users.update_user_zec_words_by_id(user.id, form_data.zec_words.lower(), form_data.zec_birthday)
             if not zec_words_updated:
                raise HTTPException(
                    status_code=status.HTTP_400_BAD_REQUEST,
@@ -397,3 +400,15 @@ async def update_user_wallets_by_id(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail=ERROR_MESSAGES.USER_NOT_FOUND,
     )
+
+class ZCashWord(BaseModel):
+    zec_words: str
+
+@router.post("/wallets/words", response_model=ZCashWord)
+async def generate_user_wallets_by_id(
+        session_user=Depends(get_verified_user),
+):
+    mnemo = Mnemonic("english")
+    words = mnemo.generate(strength=256)
+    print(f"word {words}")
+    return ZCashWord(zec_words=str(words))
