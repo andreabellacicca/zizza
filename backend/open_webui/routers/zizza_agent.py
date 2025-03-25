@@ -8,6 +8,8 @@ import json
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
+from fastapi.security import OAuth2PasswordBearer
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
@@ -15,6 +17,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from open_webui.env import SRC_LOG_LEVELS
 from open_webui.utils.auth import get_admin_user, get_password_hash, get_verified_user
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 log = logging.getLogger(__name__)
@@ -24,7 +27,7 @@ router = APIRouter()
 
 
 @router.get("/models")
-async def models():
+async def models(token: Annotated[str, Depends(oauth2_scheme)]):
     agents = []
     agents.append({
         'id': 'ZizZA',
@@ -72,7 +75,7 @@ def _create_packet(id_i: int | str,
     }
     return chunk
 
-def answer(message, history=[]):
+def answer(message, history, token: str):
     i = 0
     print(f"Message: {message}")
     print(f"History: {history}")
@@ -82,7 +85,7 @@ def answer(message, history=[]):
     total_message += message['content']
     llm = ChatOpenAI(model="ZizZA",
                      base_url="https://www.compai.team/api/v1/owui",
-                     api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjNjg4YzcwMS05MTRkLTQ2NzktOWY5Ny1iZGZkYmE5NmMyZjEiLCJub25jZSI6ImU1NmIyZjE4LTUwNWItNDc2Mi04MmJmLTI0MTc3NWNlNzkyNCIsImV4cCI6MTc0MzU0MjAwMn0.ywA0mMBh2l4c5AwO8u1stvDEKdSZKo1NBI9_gWX1d0U",
+                     api_key=token,
                      streaming=True)
     prompt = ChatPromptTemplate.from_messages(
         [
@@ -118,14 +121,14 @@ class ChatMessage(BaseModel):
     content: str
 
 @router.post("/chat/completions")
-async def chat_completions(request: ChatCompletionRequest):
+async def chat_completions(request: ChatCompletionRequest, token: Annotated[str, Depends(oauth2_scheme)]):
     print("INIT REQUEST")
     print(f"->{request}")
     print(f"request: \n{request.messages[-3:]}")
     print(f"Stream: {request.stream}\n\n**************")
     if request.stream:
         if request.model == "ZizZA":
-            return StreamingResponse(answer(request.messages[-1], request.messages[:-1]),
+            return StreamingResponse(answer(request.messages[-1], request.messages[:-1], token),
                                      media_type="text/event-stream")
         else:
             return StreamingResponse(answer_no(),
