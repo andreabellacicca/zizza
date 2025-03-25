@@ -20,7 +20,6 @@
 
     let JWTTokenCopied = false;
 
-    let APIKey = '';
     let ZCashWordsCopied = false;
     let NearAcc = '';
     let NearPk = '';
@@ -41,7 +40,6 @@
                 toast.error(`${error}`);
             }
         );
-        console.log("UPdate wallet", updatedWallet)
         if (updatedWallet.error !== null) {
             toast.error(updatedWallet.error);
         } else {
@@ -60,11 +58,10 @@
 
     const createZCashWallet = async () => {
         ZCashWords = await createZCashWord(localStorage.token);
-        console.log("ZCASHWORD", ZCashWords);
         if (ZCashWords) {
-            toast.success($i18n.t('ZCash Words created.'));
+            toast.success($i18n.t('ZCash Mnemonics created.'));
         } else {
-            toast.error($i18n.t('Failed to create ZCash words.'));
+            toast.error($i18n.t('Failed to create ZCash Mnemonics.'));
         }
     };
 
