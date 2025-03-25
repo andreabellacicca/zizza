@@ -8,9 +8,13 @@ import json
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
 
 from open_webui.env import SRC_LOG_LEVELS
 from open_webui.utils.auth import get_admin_user, get_password_hash, get_verified_user
+
 
 
 log = logging.getLogger(__name__)
@@ -68,10 +72,39 @@ def _create_packet(id_i: int | str,
     }
     return chunk
 
-def answer():
+def answer(message, history=[]):
     i = 0
-    chunk = _create_packet(f"##{i}_nodename\n", "ROBE DA FARE", "ZizZA")
-    yield f"data: {json.dumps(chunk)}\n\n"
+    print(f"Message: {message}")
+    print(f"History: {history}")
+    total_message = ""
+    for hist in history:
+        total_message += f"{hist['content']}\n"
+    total_message += message['content']
+    llm = ChatOpenAI(model="ZizZA",
+                     base_url="https://www.compai.team/api/v1/owui",
+                     api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjNjg4YzcwMS05MTRkLTQ2NzktOWY5Ny1iZGZkYmE5NmMyZjEiLCJub25jZSI6ImU1NmIyZjE4LTUwNWItNDc2Mi04MmJmLTI0MTc3NWNlNzkyNCIsImV4cCI6MTc0MzU0MjAwMn0.ywA0mMBh2l4c5AwO8u1stvDEKdSZKo1NBI9_gWX1d0U",
+                     streaming=True)
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("user", "{message}"),
+        ]
+    )
+    agent = prompt | llm
+    response = ""
+    for msg in agent.stream({'message': total_message}):
+        print(f"Msg: {msg}")
+        if i == 0:
+            # skip node name
+            i+=1
+            continue
+        if hasattr(msg, 'content'):
+            print(f"Msg content: {msg.content}")
+            response += msg.content
+            chunk = _create_packet(f"##{i}_nodename\n", msg.content, "ZizZA")
+            yield f"data: {json.dumps(chunk)}\n\n"
+            i+=1
+    print(f"Resp: {response}")
+    # cmds = json.loads(split[1].replace("'", '"'))
     yield "data: [DONE]\n\n"
 
 def answer_no():
@@ -88,11 +121,11 @@ class ChatMessage(BaseModel):
 async def chat_completions(request: ChatCompletionRequest):
     print("INIT REQUEST")
     print(f"->{request}")
-    print(f"request: \n{request.messages[-2:]}")
+    print(f"request: \n{request.messages[-3:]}")
     print(f"Stream: {request.stream}\n\n**************")
     if request.stream:
         if request.model == "ZizZA":
-            return StreamingResponse(answer(),
+            return StreamingResponse(answer(request.messages[-1], request.messages[:-1]),
                                      media_type="text/event-stream")
         else:
             return StreamingResponse(answer_no(),
