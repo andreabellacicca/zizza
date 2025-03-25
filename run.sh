@@ -5,6 +5,7 @@ container_name="open-webui"
 host_port=3000
 container_port=8080
 
+
 docker build -t "$image_name" .
 docker stop "$container_name" &>/dev/null || true
 docker rm "$container_name" &>/dev/null || true
@@ -16,4 +17,22 @@ docker run -d -p "$host_port":"$container_port" \
     --restart always \
     "$image_name"
 
-docker image prune -f
+#docker image prune -f
+
+
+# ZIZZA
+image_name="zizza-backend"
+container_name="zizza-backend"
+host_port=5001
+container_port=8000
+
+
+docker build -t "$image_name" backend/open_webui/zizza
+docker stop "$container_name" &>/dev/null || true
+docker rm "$container_name" &>/dev/null || true
+
+docker run -d -p "$host_port":"$container_port" \
+    --add-host=host.docker.internal:host-gateway \
+    --name "$container_name" \
+    --restart always \
+    "$image_name"
