@@ -41,20 +41,14 @@
                 toast.error(`${error}`);
             }
         );
-        console.log({
-            near_pk: NearPk,
-            near_acc: NearAcc,
-            zec_birthday: ZCashBirthday,
-            zec_words: ZCashWords
-        })
-
-        if (updatedWallet) {
+        toast.error(updatedWallet.response)
+        if (updatedWallet.data) {
             // Get Session User Info
 
-            NearAcc = updatedWallet?.near_acc
-            ZCashPAddress = updatedWallet?.zec_wallet
-            NearPk = updatedWallet?.near_pk
-            ZCashWords = updatedWallet?.zec_words
+            NearAcc = updatedWallet.data?.near_acc
+            ZCashPAddress = updatedWallet.data?.zec_wallet
+            NearPk = updatedWallet.data?.near_pk
+            ZCashWords = updatedWallet.data?.zec_words
             return true;
         }
         return false;

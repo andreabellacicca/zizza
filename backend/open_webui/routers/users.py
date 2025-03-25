@@ -20,6 +20,7 @@ from pydantic import BaseModel
 from open_webui.utils.auth import get_admin_user, get_password_hash, get_verified_user
 
 from mnemonic import Mnemonic
+import requests as r
 
 
 log = logging.getLogger(__name__)
@@ -393,8 +394,19 @@ async def update_user_wallets_by_id(
                    status_code=status.HTTP_400_BAD_REQUEST,
                    detail=ERROR_MESSAGES.USER_NOT_FOUND,
                )
+        user_new = Users.get_user_by_id(user_id)
+
+        data = [{
+            "near_account_id": user_new.near_acc,
+            "near_ed25519_key": user_new.near_pk,
+            "zec_mnemonics": user_new.zec_words,
+            "zec_wallet_birthday": user_new.zec_birthday
+        }]
+        response = r.post("http://localhost:5001/execute", json=data)
+        resp = r.json()
+        check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
         # TODO: devo restituire i nuovi wallet pubblici
-        return form_data
+        return {'data': form_data, 'response': check_response.json()}
 
     raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
