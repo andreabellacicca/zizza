@@ -41,15 +41,19 @@
                 toast.error(`${error}`);
             }
         );
-        toast.error(updatedWallet.response)
-        if (updatedWallet.data) {
-            // Get Session User Info
-
-            NearAcc = updatedWallet.data?.near_acc
-            ZCashPAddress = updatedWallet.data?.zec_wallet
-            NearPk = updatedWallet.data?.near_pk
-            ZCashWords = updatedWallet.data?.zec_words
-            return true;
+        console.log("UPdate wallet", updatedWallet)
+        if (updatedWallet.error !== null) {
+            toast.error(updatedWallet.error);
+        } else {
+            toast.success("Wallet info updated successfully.");
+            if (updatedWallet.data) {
+                // Get Session User Info
+                NearAcc = updatedWallet.data?.near_acc
+                ZCashPAddress = updatedWallet.response?.zec.address
+                NearPk = updatedWallet.data?.near_pk
+                ZCashWords = updatedWallet.data?.zec_words
+                return true;
+            }
         }
         return false;
     };
@@ -83,7 +87,7 @@
         <div class="space-y-1">
             <div class="pt-0.5">
                 <div class="flex flex-col w-full">
-                    <div class=" mb-1 text-xs font-medium">{$i18n.t('NEAR Address')}</div>
+                    <div class=" mb-1 text-xs font-medium">{$i18n.t('NEAR Account ID')}</div>
 
                     <div class="flex-1">
                         <input
@@ -98,13 +102,13 @@
 
             <div class="pt-2">
                 <div class="flex flex-col w-full">
-                    <div class=" mb-1 text-xs font-medium">{$i18n.t('Zcash Public Address')}</div>
+                    <div class=" mb-1 text-xs font-medium">{$i18n.t('ZCash Unified Address')}</div>
 
                     <div class="flex-1">
                         <input
                                 class="w-full rounded-lg py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-850 outline-hidden"
                                 type="url"
-                                placeholder={$i18n.t('ZCash Public Address')}
+                                placeholder={$i18n.t('ZCash Unified Address')}
                                 bind:value={ZCashPAddress}
                                 readonly
                         />
@@ -134,7 +138,7 @@
                         <div class="flex grid-cols-2 gap-2 mr-2">
                             <div>
                                 <div class="flex justify-between w-full">
-                                    <div class="self-center text-xs font-medium">{$i18n.t('NEAR Account')}</div>
+                                    <div class="self-center text-xs font-medium">{$i18n.t('NEAR Account ID')}</div>
                                 </div>
                                 <input
                                         class="w-full rounded-lg py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-850 outline-hidden"

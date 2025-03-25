@@ -1,5 +1,6 @@
 import logging
 from typing import Optional
+import time
 
 from open_webui.models.auths import Auths
 from open_webui.models.chats import Chats
@@ -11,7 +12,6 @@ from open_webui.models.users import (
     UserUpdateForm,
 )
 
-
 from open_webui.socket.main import get_active_status_by_user_id
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import SRC_LOG_LEVELS
@@ -22,11 +22,11 @@ from open_webui.utils.auth import get_admin_user, get_password_hash, get_verifie
 from mnemonic import Mnemonic
 import requests as r
 
-
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
 
 router = APIRouter()
+
 
 ############################
 # GetUsers
@@ -35,9 +35,9 @@ router = APIRouter()
 
 @router.get("/", response_model=list[UserModel])
 async def get_users(
-    skip: Optional[int] = None,
-    limit: Optional[int] = None,
-    user=Depends(get_admin_user),
+        skip: Optional[int] = None,
+        limit: Optional[int] = None,
+        user=Depends(get_admin_user),
 ):
     return Users.get_users(skip, limit)
 
@@ -109,7 +109,7 @@ async def get_user_permissions(request: Request, user=Depends(get_admin_user)):
 
 @router.post("/default/permissions")
 async def update_user_permissions(
-    request: Request, form_data: UserPermissions, user=Depends(get_admin_user)
+        request: Request, form_data: UserPermissions, user=Depends(get_admin_user)
 ):
     request.app.state.config.USER_PERMISSIONS = form_data.model_dump()
     return request.app.state.config.USER_PERMISSIONS
@@ -155,7 +155,7 @@ async def get_user_settings_by_session_user(user=Depends(get_verified_user)):
 
 @router.post("/user/settings/update", response_model=UserSettings)
 async def update_user_settings_by_session_user(
-    form_data: UserSettings, user=Depends(get_verified_user)
+        form_data: UserSettings, user=Depends(get_verified_user)
 ):
     user = Users.update_user_settings_by_id(user.id, form_data.model_dump())
     if user:
@@ -191,7 +191,7 @@ async def get_user_info_by_session_user(user=Depends(get_verified_user)):
 
 @router.post("/user/info/update", response_model=Optional[dict])
 async def update_user_info_by_session_user(
-    form_data: dict, user=Depends(get_verified_user)
+        form_data: dict, user=Depends(get_verified_user)
 ):
     user = Users.get_user_by_id(user.id)
     if user:
@@ -263,9 +263,9 @@ async def get_user_by_id(user_id: str, user=Depends(get_verified_user)):
 
 @router.post("/{user_id}/update", response_model=Optional[UserModel])
 async def update_user_by_id(
-    user_id: str,
-    form_data: UserUpdateForm,
-    session_user=Depends(get_admin_user),
+        user_id: str,
+        form_data: UserUpdateForm,
+        session_user=Depends(get_admin_user),
 ):
     user = Users.get_user_by_id(user_id)
 
@@ -343,15 +343,16 @@ class UserWallet(BaseModel):
     zec_words: Optional[str] = None
     zec_birthday: Optional[int] = None
 
+
 @router.get("/{user_id}/wallets", response_model=UserWallet)
 async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
     # Check if user_id is a shared chat
     # If it is, get the user_id from the chat
     if user_id.startswith("shared-"):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ERROR_MESSAGES.USER_NOT_FOUND,
-            )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.USER_NOT_FOUND,
+        )
 
     user_found = Users.get_user_by_id(user_id)
 
@@ -371,50 +372,83 @@ async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
             detail=ERROR_MESSAGES.USER_NOT_FOUND,
         )
 
-@router.post("/{user_id}/wallets/update", response_model=Optional[UserWallet])
+class UpdateWallet(BaseModel):
+    data: UserWallet
+    response: dict
+    error: Optional[str] = None
+
+@router.post("/{user_id}/wallets/update", response_model=Optional[UpdateWallet])
 async def update_user_wallets_by_id(
-    user_id: str,
-    form_data: UserWallet,
-    user=Depends(get_verified_user)
+        user_id: str,
+        form_data: UserWallet,
+        user=Depends(get_verified_user)
 ):
     user_found = Users.get_user_by_id(user_id)
     print(f"Form data: {form_data}")
     if user_found.id == user.id:
-        if form_data.near_pk.lower() != user.near_pk or form_data.near_acc != user.near_acc:
-            near_pk_updated = Users.update_user_near_pk_by_id(user.id, form_data.near_pk.lower(), form_data.near_acc)
+        if form_data.near_pk != user.near_pk or form_data.near_acc != user.near_acc:
+            near_pk_updated = Users.update_user_near_pk_by_id(user.id, form_data.near_pk, form_data.near_acc)
             if not near_pk_updated:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
                     detail=ERROR_MESSAGES.USER_NOT_FOUND,
                 )
-        if form_data.zec_words.lower() != user.zec_words or form_data.zec_birthday!=user.zec_birthday:
-            zec_words_updated = Users.update_user_zec_words_by_id(user.id, form_data.zec_words.lower(), form_data.zec_birthday)
+        if form_data.zec_words.lower() != user.zec_words or form_data.zec_birthday != user.zec_birthday:
+            zec_words_updated = Users.update_user_zec_words_by_id(user.id, form_data.zec_words.lower(),
+                                                                  form_data.zec_birthday)
             if not zec_words_updated:
-               raise HTTPException(
-                   status_code=status.HTTP_400_BAD_REQUEST,
-                   detail=ERROR_MESSAGES.USER_NOT_FOUND,
-               )
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ERROR_MESSAGES.USER_NOT_FOUND,
+                )
         user_new = Users.get_user_by_id(user_id)
-
         data = [{
-            "near_account_id": user_new.near_acc,
-            "near_ed25519_key": user_new.near_pk,
-            "zec_mnemonics": user_new.zec_words,
-            "zec_wallet_birthday": user_new.zec_birthday
-        }]
+            "command": "set_agent",
+            "params": {
+                "near_account_id": user_new.near_acc,
+                "near_ed25519_key": user_new.near_pk,
+                "zec_mnemonics": user_new.zec_words,
+                "zec_wallet_birthday": user_new.zec_birthday
+            }}
+        ]
         response = r.post("http://localhost:5001/execute", json=data)
-        resp = r.json()
-        check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
+        resp = response.json()
+
+        done = False
+        while not done:
+            time.sleep(1)
+            check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
+            check_json = check_response.json()
+            print(f"Response: {check_json}")
+            if not 'Processing' in check_json['status']:
+                done = True
+        print(f"Done: {check_json}")
+        print(f"{check_json['results'][0]['result']['ZEC']}")
         # TODO: devo restituire i nuovi wallet pubblici
-        return {'data': form_data, 'response': check_response.json()}
+        return {
+                    'data': form_data,
+                    'response': {
+                        'zec':{
+                            'address': check_json['results'][0]['result']['ZEC']['ua_addresses']['address'],
+                            'balance': check_json['results'][0]['result']['ZEC']['ua_addresses']['balance']
+                        },
+                        'near':{
+                            'account': check_json['results'][0]['result']['NEAR']['address'],
+                            'balance': check_json['results'][0]['result']['NEAR']['balance']
+                        }
+                    },
+                    'error': None
+                }
 
     raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail=ERROR_MESSAGES.USER_NOT_FOUND,
     )
 
+
 class ZCashWord(BaseModel):
     zec_words: str
+
 
 @router.post("/wallets/words", response_model=ZCashWord)
 async def generate_user_wallets_by_id(
