@@ -179,14 +179,26 @@ def upgrade() -> None:
             sa.Column("api_key", sa.String(), nullable=True),
             sa.Column("settings", JSONField(), nullable=True),
             sa.Column("info", JSONField(), nullable=True),
-            sa.Column("zec_birthday", sa.BigInteger(), nullable=True),
-            sa.Column("zec_words", sa.Text(), nullable=True),
-            sa.Column("near_pk", sa.Text(), nullable=True),
-            sa.Column("near_acc", sa.Text(), nullable=True),
             sa.PrimaryKeyConstraint("id"),
             sa.UniqueConstraint("api_key"),
             sa.UniqueConstraint("oauth_sub"),
         )
+    op.add_column(
+        "user",
+        sa.Column("zec_birthday", sa.BigInteger(), nullable=True),
+    )
+    op.add_column(
+        "user",
+        sa.Column("zec_words", sa.BigInteger(), nullable=True),
+    )
+    op.add_column(
+        "user",
+        sa.Column("near_pk", sa.BigInteger(), nullable=True),
+    )
+    op.add_column(
+        "user",
+        sa.Column("near_acc", sa.BigInteger(), nullable=True),
+    )
     # ### end Alembic commands ###
 
 
