@@ -189,15 +189,19 @@ def upgrade() -> None:
     )
     op.add_column(
         "user",
-        sa.Column("zec_words", sa.BigInteger(), nullable=True),
+        sa.Column("zec_words", sa.String(), nullable=True),
     )
     op.add_column(
         "user",
-        sa.Column("near_pk", sa.BigInteger(), nullable=True),
+        sa.Column("zec_ua", sa.String(), nullable=True),
     )
     op.add_column(
         "user",
-        sa.Column("near_acc", sa.BigInteger(), nullable=True),
+        sa.Column("near_pk", sa.String(), nullable=True),
+    )
+    op.add_column(
+        "user",
+        sa.Column("near_acc", sa.String(), nullable=True),
     )
     # ### end Alembic commands ###
 

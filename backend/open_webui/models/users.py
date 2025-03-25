@@ -33,6 +33,7 @@ class User(Base):
     near_pk = Column(String, nullable=True, unique=True)
     near_acc = Column(String, nullable=True, unique=True)
     zec_words = Column(String, nullable=True, unique=True)
+    zec_ua = Column(String, nullable=True, unique=True)
     zec_birthday = Column(BigInteger, nullable=True)
 
     settings = Column(JSONField, nullable=True)
@@ -62,6 +63,7 @@ class UserModel(BaseModel):
     near_pk: Optional[str] = None
     near_acc: Optional[str] = None
     zec_words: Optional[str] = None
+    zec_ua: Optional[str] = None
     zec_birthday: Optional[int] = None
 
     settings: Optional[UserSettings] = None
