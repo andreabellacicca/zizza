@@ -149,8 +149,7 @@ You can learn more about Compai and its features at [Compai](www.compai.team) (w
 
 By building the ZizZA AI team with Compai, we were able to create a highly effective and efficient AI team that provides a seamless user experience and supports interactions with the NEAR blockchain.
 
-# TX Intent Server: How it works
--------------------------
+## TX Intent Server: How it works
 
 The TX Intent Server is an application designed to manage transactions (TX) related to user intentions. This server represents a key component in the system architecture, ensuring the effective and secure management of transactions.
 
