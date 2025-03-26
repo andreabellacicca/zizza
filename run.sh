@@ -15,16 +15,15 @@ docker run -d -p "$host_port":"$container_port" \
     -v "${image_name}:/app/backend/data" \
     --name "$container_name" \
     --restart always \
+    --network host \
     "$image_name"
-
-#docker image prune -f
 
 
 # ZIZZA
 image_name="zizza-backend"
 container_name="zizza-backend"
-host_port=5001
-container_port=8000
+host_port=9000
+container_port=5001
 
 
 docker build -t "$image_name" backend/open_webui/zizza
@@ -35,4 +34,5 @@ docker run -d -p "$host_port":"$container_port" \
     --add-host=host.docker.internal:host-gateway \
     --name "$container_name" \
     --restart always \
+    --network host \
     "$image_name"
