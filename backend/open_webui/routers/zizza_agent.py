@@ -161,6 +161,8 @@ def execute(cmd, token):
             explanation = agent_care.invoke({'message': f"params{result['params']}\nresults: {result['result']}"}).content
             text += explanation.split("\n",1)[1]
             text +="\n\n"
+            if result['command'] == "swap":
+                text += f"https://nearblocks.io/it/txns/{result['result']['tx_hash']}\n\n"
         chunk = _create_packet(i, text, "ZizZA")
         yield f"data: {json.dumps(chunk)}\n\n"
     yield "data: [DONE]\n\n"
