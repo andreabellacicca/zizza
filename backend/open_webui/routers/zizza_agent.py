@@ -145,12 +145,22 @@ def execute(cmd, token):
         if not 'Processing' in check_json['status']:
             done = True
     print(f"Done: {check_json}")
+    llm_care = ChatOpenAI(model="ZizZA Care",
+                          base_url="https://www.compai.team/api/v1/owui",
+                          api_key=token,
+                          streaming=True)
     for result in check_json['results']:
-        error = ""
+        agent_care = prompt | llm_care
         if 'error' in result:
-            text = f"## {result['command']} - FAILED\n{result['error']}\n\n"
+            text = f"## {result['command']} - FAILED\n"
+            explanation = agent_care.invoke({'message': f"ERROR: {result['error']}"}).content
+            text += explanation.split("\n",1)[1]
+            text +="\n\n"
         else:
-            text = f"## {result['command']}\n{result['result']}\n\n"
+            text = f"## {result['command']}\n"
+            explanation = agent_care.invoke({'message': f"params{result['params']}\nresults: {result['result']}"}).content
+            text += explanation.split("\n",1)[1]
+            text +="\n\n"
         chunk = _create_packet(i, text, "ZizZA")
         yield f"data: {json.dumps(chunk)}\n\n"
     yield "data: [DONE]\n\n"
