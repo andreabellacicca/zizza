@@ -4,6 +4,7 @@ from datetime import datetime
 import time
 import math
 import json
+import requests as r
 
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -76,11 +77,11 @@ def _create_packet(id_i: int | str,
     return chunk
 
 def answer(message, history, token: str):
-    i = 0
     print(f"Message: {message}")
     print(f"History: {history}")
     total_message = ""
-    for hist in history:
+    # CUT THE HISTORY TO THE LAST MESSAGES
+    for hist in history[-4:]:
         total_message += f"{hist['content']}\n"
     total_message += message['content']
     llm = ChatOpenAI(model="ZizZA",
@@ -93,22 +94,63 @@ def answer(message, history, token: str):
         ]
     )
     agent = prompt | llm
+    i = 0
     response = ""
     for msg in agent.stream({'message': total_message}):
         print(f"Msg: {msg}")
         if i == 0:
-            # skip node name
             i+=1
             continue
         if hasattr(msg, 'content'):
             print(f"Msg content: {msg.content}")
             response += msg.content
-            chunk = _create_packet(f"##{i}_nodename\n", msg.content, "ZizZA")
+            chunk = _create_packet(i, msg.content, "ZizZA")
             yield f"data: {json.dumps(chunk)}\n\n"
-            i+=1
+            i += 1
+    chunk = _create_packet(i, "Answer execute to confirm\n", "ZizZA")
+    yield f"data: {json.dumps(chunk)}\n\n"
     print(f"Resp: {response}")
     # cmds = json.loads(split[1].replace("'", '"'))
     yield "data: [DONE]\n\n"
+
+def execute(cmd, token):
+    llm = ChatOpenAI(model="ZizZA Exe",
+                     base_url="https://www.compai.team/api/v1/owui",
+                     api_key=token,
+                     streaming=True)
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("user", "{message}"),
+        ]
+    )
+    agent = prompt | llm
+    response = agent.invoke({'message': cmd})
+    print(response)
+    cmds = response.content
+    cmds = cmds.split("\n",1)
+    cmds = cmds[1]
+    print(f"Cmds: {cmds}")
+    i = 0
+    cmds_dict = json.loads(cmds)
+    response = r.post("http://localhost:5001/execute", json=cmds_dict)
+    resp = response.json()
+    done = False
+    chunk = _create_packet(i, "Executing operations\n", "ZizZA")
+    yield f"data: {json.dumps(chunk)}\n\n"
+    while not done:
+        time.sleep(1)
+        check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
+        check_json = check_response.json()
+        print(f"Response: {check_json}")
+        if not 'Processing' in check_json['status']:
+            done = True
+    print(f"Done: {check_json}")
+    for result in check_json['results']:
+        text = f"## {result['command']}\n{result['result']}\n\n"
+        chunk = _create_packet(i, text, "ZizZA")
+        yield f"data: {json.dumps(chunk)}\n\n"
+    yield "data: [DONE]\n\n"
+
 
 def answer_no():
     i = 0
@@ -128,6 +170,9 @@ async def chat_completions(request: ChatCompletionRequest, token: Annotated[str,
     print(f"Stream: {request.stream}\n\n**************")
     if request.stream:
         if request.model == "ZizZA":
+            if request.messages[-1]['content'] == "execute":
+                return StreamingResponse(execute(request.messages[-2]['content'], token),
+                                         media_type="text/event-stream")
             return StreamingResponse(answer(request.messages[-1], request.messages[:-1], token),
                                      media_type="text/event-stream")
         else:
