@@ -1,4 +1,4 @@
-# :princess: Introducing ZizZA: Your AI-Powered NEAR Transaction Assistant:
+# :princess: Introducing ZizZA: Your AI-Powered NEAR Transaction Assistant
 **Zizza is zer ZCash Agent**
 ----------------
 
