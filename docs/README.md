@@ -91,7 +91,8 @@ Moreover, ZizZA can concatenate multiple commands, allowing the user to execute 
 
 **The AI Team: How it Works**
 --------------------------------------
-![ZizZA Agent Team](/docs/img/zizza_team.png])
+[ZizZA Agent Team](/docs/img/zizza_team.png)
+
 The AI team of ZizZA is composed of three LLM (Large Language Model) assistants based on LLaMA 70B, each with a specific and complementary role. This team works together to provide a seamless user experience and support interactions with the NEAR blockchain.
 
 ### Assistant 1: ZizZA Help Desk
