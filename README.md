@@ -1,8 +1,8 @@
-# :princess: Introducing ZizZA: Your AI-Powered NEAR Transaction Assistant
+# :princess: Introducing ZizZA: Your AI-Powered NEAR and Zcash Transaction Assistant
 **Zizza is zer ZCash Agent**
 ----------------
 
-ZizZA is an AI agent team that enables users to execute transactions on the NEAR blockchain using intents and natural language commands. Our goal is to make interacting with the blockchain simpler and more accessible to everyone.
+ZizZA is an AI agent team that enables users to execute transactions on the NEAR and Zcash blockchains using intents and natural language commands. Our goal is to make interacting with the blockchain simpler and more accessible to everyone.
 ZizZA can concatenate multiple commands, allowing the user to execute complex tasks.
 
 ![ZizZA Agent Team](/docs/img/zizza_wallpaper.jpeg)
@@ -36,11 +36,23 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
 **Key Features**
 ----------------
 
-* **Transactions with Natural Language**: ZizZA allows users to execute transactions on the NEAR blockchain using natural language commands, such as "Send 10 wNEAR to <address>" or "SWAP 5 ZEC tokens with wNEAR".
-* **Support for NEAR Intents**: ZizZA supports NEAR intents, including:
-  + **Transfer**: send tokens from one account to another
-  + **View**: view information related to an account or smart contract
-* **Intuitive User Interface**: ZizZA has a user-friendly interface that allows users to interact with the NEAR blockchain without needing in-depth technical knowledge.
+* **Transactions with Natural Language**: ZizZA allows users to execute transactions on the NEAR and Zcash blockchains using natural language commands, such as "Send 10 wNEAR to {address} or "SWAP 5 
+ ZEC tokens with wNEAR".
+
+* **Support for NEAR Intents**: ZizZA supports NEAR intents, including:  
+  + **Transfer**: send tokens from one account to another  
+  + **View**: view information related to an account or smart contract  
+  + **intents.near**: ZizZA makes extensive use of the **intents.near** smart contract for **deposits, swaps, and withdrawals**, ensuring seamless and efficient transaction management  
+
+* **Support for Zcash transactions**: ZizZA supports ZEC transfers, including:  
+  + **NU6**: support for the NU6 network upgrade, enabling enhanced privacy and efficiency  
+  + **Inter-address transfers**: seamless transfers between **Transparent**, **Sapling**, and **Unified Addresses**, ensuring compatibility and enhanced privacy  
+  + **Auto-shielding**: automatically convert transparent ZEC into shielded funds for better privacy  
+
+* **Cross-chain interoperability**:  
+  + ZizZA leverages **OmniBridge** as a cross-chain protocol to facilitate **native ZEC deposits** and support transactions across multiple blockchain networks  
+
+* **Intuitive User Interface**: ZizZA has a user-friendly interface that allows users to interact with the NEAR and Zcash blockchains without needing in-depth technical knowledge.
 
 **How ZizZA Works**
 ----------------------
@@ -53,15 +65,15 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
 **Benefits of ZizZA**
 ----------------------
 Using ZizZA provides several benefits, including:
-* **Simplicity**: ZizZA makes interacting with the NEAR blockchain simpler and more accessible to everyone.
+* **Simplicity**: ZizZA makes interacting with the NEAR and Zcash blockchains simpler and more accessible to everyone.
 * **Efficiency**: ZizZA automates transactions, reducing the time and errors associated with manual transactions.
 * **Security**: ZizZA ensures the security of transactions through validation and verification of user-provided information.
 * **Standalone service**: One of the key benefits of ZizZA is that it can be run standalone on your local machine, without requiring any external services or dependencies.
 * **Improved Privacy** : By running ZizZA on your local machine, you can keep your transactions and data private, without relying on third-party services or cloud-based solutions.
 * **Enhanced Security** : With ZizZA, you have full control over your transactions and data, and can ensure that your private keys and sensitive information are stored securely on your local machine.
-* **Increased Accessibility** : ZizZA's natural language interface makes it easy for anyone to interact with the NEAR blockchain, regardless of their technical expertise or experience with blockchain technology.
+* **Increased Accessibility** : ZizZA's natural language interface makes it easy for anyone to interact with the NEAR and Zcash networks, regardless of their technical expertise or experience with blockchain technology.
 * **Flexibility** : ZizZA can be used in a variety of scenarios, from simple transactions to complex smart contract interactions, making it a versatile tool for anyone looking to interact with the NEAR blockchain.
-* **Decentralization** : ZizZA allows you to interact with the NEAR blockchain in a decentralized manner, without relying on centralized services or intermediaries.
+* **Decentralization** : ZizZA allows you to interact with the NEAR and Zcash blockchains in a decentralized manner, without relying on centralized services or intermediaries.
 
 ## Using ZizZA
 
@@ -84,10 +96,11 @@ To use the ZizZA agent, open your browser on localhost:8080 (default configurati
 2. Add your:
 	* **NEAR Account ID**: enter your NEAR account ID.
 	* **NEAR Private Key (PK)**: enter your NEAR private key.
-	* **Zcash Wallet**: enter your existing Zcash wallet address or generate a new one.
+	* **Zcash Mnemonics**: enter your existing BIP39 24 word phrase or generate a new one.
+	* **Zcash Wallet Birthday**: Enter the Zcash block height at the time your wallet was created. Otherwise, syncing will take longer as it starts from block 1.
 3. Click **Save** to save your wallet settings.
 
-**Note:** Please be aware that all wallet information, including private keys and addresses, is stored **locally** on your device and is **not** shared with anyone, including the TX Intent Server or any third-party services. Your wallet information remains confidential and secure, and is only used to facilitate transactions on your behalf.
+**Note:** Please be aware that all wallet information, including private keys and addresses, is stored **locally** on your device and is **not** shared with anyone, including the **zizza-blockchain-intent-server** or any third-party services. Your wallet information remains confidential and secure, and is only used to facilitate transactions on your behalf.
 
 ### Step 2: Start a Conversation with the Agent
 
@@ -106,7 +119,7 @@ Note: The agent will respond accordingly based on the commands you provide.
 
 **Using Natural Language to Interact with ZizZA**
 ----------------------
-ZizZA allows you to interact with the NEAR blockchain using natural language commands. You can phrase your requests in a way that feels most natural to you, and ZizZA will understand what you want to do.
+ZizZA allows you to interact with the NEAR and Zcash blockchains using natural language commands. You can phrase your requests in a way that feels most natural to you, and ZizZA will understand what you want to do.
 
 For example, instead of using the specific command swap with the required parameters, you can simply say:
 
@@ -220,12 +233,13 @@ You can learn more about Compai and its features at [Compai](www.compai.team) (w
 
 By building the ZizZA AI team with Compai, we were able to create a highly effective and efficient AI team that provides a seamless user experience and supports interactions with the NEAR blockchain.
 
-## TX Intent Server: How it works
+## zizza-blockchain-intent-server: How it works
 
-The TX Intent Server is an application designed to manage transactions (TX) related to user intentions. This server represents a key component in the system architecture, ensuring the effective and secure management of transactions.
+**zizza-blockchain-intent-server** is an application designed to handle operations such as **wallet creation, deposits, swaps, withdrawals, and balance management** based on user intents. It serves as a **core component** of the system architecture, ensuring efficient and secure transaction processing.
 
 ### Main Features
 
+* **Wallet Management**: This component handles the **creation and import** of **NEAR accounts** and **Zcash wallets**.
 * **Transaction Management**: The server manages transactions related to user intentions, ensuring that every action is properly recorded and verified.
 * **Intention Verification**: The server verifies user intentions before executing transactions, ensuring that they are valid and authorized.
 * **Security**: The server implements robust security measures to protect sensitive information related to transactions and user intentions.
@@ -234,12 +248,13 @@ The TX Intent Server is an application designed to manage transactions (TX) rela
 ### Technical Characteristics
 
 * **Architecture**: The server is based on a microservices architecture, allowing for flexibility and easy maintenance.
-* **Technologies**: The server uses technologies such as [list the technologies used, e.g. Node.js, Python, etc.] to ensure the effective management of transactions.
-* **Database**: The server uses a [list the type of database used, e.g. MySQL, MongoDB, etc.] database to store information related to transactions and user intentions.
+* **Technologies**: The server utilizes Python as the primary language to interact with the NEAR API SDK, ensuring efficient management of transactions and seamless integration with the NEAR blockchain. This approach leverages the simplicity and flexibility of Python, enabling the handling of complex operations in a streamlined and effective manner.  
+* **Database-Free Architecture**: The solution adopts an innovative design that eliminates the need for traditional databases, reducing infrastructure complexity and enhancing scalability. All transaction-related information and user intents are managed directly on the NEAR blockchain, ensuring transparency, security, and decentralization.  
+* **Zcash Integration via Wrapper**: A custom wrapper has been developed for the well-known zecwallet-light-cli wallet, enabling interaction with the Zcash blockchain without the need for a full node. This lightweight solution simplifies the process of sending, receiving, and managing Zcash transactions, making it more accessible and resource-efficient while maintaining the privacy and security features inherent to the Zcash protocol.
 
 ### Contributing
 
-The TX Server has been developed by WhOOhW https://github.com/wh00hw/zizza-backend/tree/master
+zizza-blockchain-intent-server has been developed by **wh00hw** https://github.com/wh00hw/zizza-backend/tree/master
 
 
 **Supported Commands**
@@ -315,4 +330,4 @@ ZizZA supports the following commands:
   + `to_address`: the wallet address to send the token to
   + `amount`: the amount to send
 
-These commands can be used to interact with the NEAR blockchain and perform various operations, such as retrieving balances, depositing and withdrawing tokens, swapping tokens, and sending tokens to other addresses.
+These commands can be used to interact with the NEAR and Zcash blockchains and perform various operations, such as retrieving balances, depositing and withdrawing tokens, swapping tokens, and sending tokens to other addresses.
