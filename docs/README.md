@@ -123,6 +123,33 @@ The ZizZA Result Commenter assistant is responsible for commenting on the result
 
 ### How the AI Team Works
 
+                                          +---------------------------------------------------+
+                                          |                                                   |
+                                          | ZizZA AI Team              +-----------+          |
+                                          |                            |           |          |
+                                          |                            |   Agent   |          |
+                                          |                       +----> Help Desk |          |
+                                          |                       |    |           |          |
+                                          |                       |    |           |          |
+                                          |                       |    +-----------+          |
+                                          |       +------------+  |    +-----------+          |
+                                  User    |       |            |  |    |           |          |
+                                  Question|       |   Agent    |  |    |   Agent   |          |
+                                  --------+------>|  Message   +--+---->  Command  |          |
+                                          |       | Dispatcher |  |    | Converter |          |
+                                          |       |            |  |    |           |          |
+                                          |       +------------+  |    +-----------+          |
+                                          |                       |    +-----------+          |
+                                          |                       |    |           |          |
+                                          |                       |    |   Agent   |          |
+                                          |                       +---->  Result   |          |
+                                          |                            | Commenter |          |
+                                          |                            |           |          |
+                                          |                            +-----------+          |
+                                          |                                                   |
+                                          +---------------------------------------------------+
+              
+
 When a user interacts with ZizZA, the AI team works together to provide a seamless user experience and support interactions with the NEAR blockchain. Here's how the process works:
 
 1. The user sends a request to the AI team, such as "I want to send 10 wNEAR to this address".
