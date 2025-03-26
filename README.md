@@ -235,7 +235,7 @@ By building the ZizZA AI team with Compai, we were able to create a highly effec
 
 ## zizza-blockchain-intent-server: How it works
 
-**zizza-blockchain-intent-server** is an application designed to handle operations such as **wallet creation, deposits, swaps, withdrawals, and balance management** based on user intents. It serves as a **core component** of the system architecture, ensuring efficient and secure transaction processing.
+**zizza-blockchain-intent-server** is an application designed to handle operations such as **wallet creation, deposit, swap, withdrawal, send and balance management** based on user intents. It serves as a **core component** of the system architecture, ensuring efficient and secure transaction processing.
 
 ### Main Features
 
