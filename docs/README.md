@@ -3,7 +3,7 @@
 ----------------
 
 ZizZA is an AI agent team that enables users to execute transactions on the NEAR blockchain using intents and natural language commands. Our goal is to make interacting with the blockchain simpler and more accessible to everyone.
-ZizZA can concatenate multiple commands, allowing the user to execute complex tasks
+ZizZA can concatenate multiple commands, allowing the user to execute complex tasks.
 
 **Table of Contents**
 ----------------
@@ -91,7 +91,7 @@ Moreover, ZizZA can concatenate multiple commands, allowing the user to execute 
 
 **The AI Team: How it Works**
 --------------------------------------
-
+![ZizZA Agent Team](/docs/img/zizza_team.png])
 The AI team of ZizZA is composed of three LLM (Large Language Model) assistants based on LLaMA 70B, each with a specific and complementary role. This team works together to provide a seamless user experience and support interactions with the NEAR blockchain.
 
 ### Assistant 1: ZizZA Help Desk
