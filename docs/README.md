@@ -63,6 +63,46 @@ Using ZizZA provides several benefits, including:
 * **Flexibility** : ZizZA can be used in a variety of scenarios, from simple transactions to complex smart contract interactions, making it a versatile tool for anyone looking to interact with the NEAR blockchain.
 * **Decentralization** : ZizZA allows you to interact with the NEAR blockchain in a decentralized manner, without relying on centralized services or intermediaries.
 
+## Using ZizZA
+
+To use the ZizZA agent, open your browser on localhost:8080 (default configuration) and follow these steps:
+
+### Step 0: Create Admin Account (First-Time Login Only)
+
+1. **If this is your first time logging in**, you will be prompted to create an admin account.
+2. Enter your:
+	* **Name**: your full name.
+	* **Email**: your email address.
+	* **Password**: create a strong and unique password for your admin account.
+3. Click **Create Account** to create your admin account.
+
+**Note:** This step is only required for first-time users. If you have already created an admin account, proceed to Step 1.
+
+### Step 1: Setup Your Wallet
+
+1. Go to **Settings** → **Wallet**.
+2. Add your:
+	* **NEAR Account ID**: enter your NEAR account ID.
+	* **NEAR Private Key (PK)**: enter your NEAR private key.
+	* **Zcash Wallet**: enter your existing Zcash wallet address or generate a new one.
+3. Click **Save** to save your wallet settings.
+
+**Note:** Please be aware that all wallet information, including private keys and addresses, is stored **locally** on your device and is **not** shared with anyone, including the TX Intent Server or any third-party services. Your wallet information remains confidential and secure, and is only used to facilitate transactions on your behalf.
+
+### Step 2: Start a Conversation with the Agent
+
+1. Start a conversation with the agent.
+2. Ask the agent to perform actions using the following commands:
+	* [List the available commands, e.g. "send NEAR", "send Zcash", "check balance", etc.]
+
+Note: The agent will respond accordingly based on the commands you provide.
+
+## Tips and Reminders
+--------------------
+
+* Make sure to save your wallet settings to ensure that your transactions are processed correctly.
+* Be careful when entering your private keys and wallet addresses, as they are sensitive information.
+* If you have any issues or concerns, refer to the [list the troubleshooting or support resources, e.g. FAQ, support email, etc.].
 
 **Using Natural Language to Interact with ZizZA**
 ----------------------
