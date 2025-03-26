@@ -109,10 +109,17 @@ DEFAULT_CONFIG = {
         "prompt_suggestions": [
             {
                 "title": [
-                    "Give me ideas",
-                    "for what to do with my kids' art",
+                    "Show me the available chains",
+                    "in the NEAR ecosystem",
                 ],
-                "content": "What are 5 creative things I could do with my kids' art? I don't want to throw them away, but it's also so much clutter.",
+                "content": "Show me where the available chains",
+            },
+            {
+                "title": [
+                    "Tell me what tokens are available",
+                    "on the NEAR blockchain",
+                ],
+                "content": "Tell me what tokens are available on the NEAR chain",
             },
         ],
     },
