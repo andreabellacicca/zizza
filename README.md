@@ -53,6 +53,8 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
   + ZizZA leverages **OmniBridge** as a cross-chain protocol to facilitate **native ZEC deposits** and support transactions across multiple blockchain networks  
 
 * **Intuitive User Interface**: ZizZA has a user-friendly interface that allows users to interact with the NEAR and Zcash blockchains without needing in-depth technical knowledge.
+* **Command Concatenation**:  ZizZA can concatenate multiple commands, allowing the user to execute complex tasks. For example, the user can say "I want to send 10 wNEAR to this address and then swap 5 wNEAR for ZEC".
+
 
 **How ZizZA Works**
 ----------------------
@@ -111,11 +113,17 @@ To use the ZizZA agent, open your browser on localhost:8080 (default configurati
 Note: The agent will respond accordingly based on the commands you provide.
 
 ## Tips and Reminders
---------------------
 
 * Make sure to save your wallet settings to ensure that your transactions are processed correctly.
 * Be careful when entering your private keys and wallet addresses, as they are sensitive information.
 * If you have any issues or concerns, refer to the [list the troubleshooting or support resources, e.g. FAQ, support email, etc.].
+
+## Installation
+Follow these steps to install ZizZA as a dockerfrom terminal:
+1. git clone https://github.com/andreabellacicca/zizza.git
+2. cd zizza
+3. git submodule update --remote --recursive
+4. ./run.sh
 
 **Using Natural Language to Interact with ZizZA**
 ----------------------
@@ -144,6 +152,31 @@ You can use this natural language approach for all of the supported commands, in
 By using natural language, you can interact with ZizZA in a more intuitive and user-friendly way, without having to remember specific command syntax or parameters.
 
 Moreover, ZizZA can concatenate multiple commands, allowing the user to execute complex tasks. For example, the user can say "I want to send 10 wNEAR to this address and then swap 5 wNEAR for ZEC".
+
+## Components of Zizza
+
+1. **UI: A Conversational AI Interface**
+   The user experience (UX) of Zizza is designed to be intuitive and easy to use, allowing users to chat and interact with the platform in a natural and effortless way. This component is focused on providing a straightforward and simple interface that makes it easy for users to navigate and achieve their goals.
+
+2. **AI Agents Team**
+   The AI Agents team is a critical component of Zizza, responsible for interacting with users to understand their needs and transform their commands into near intentions . These AI agents engage in conversations with users to clarify their requests, ask follow-up questions, and gather necessary information. They then analyze the user's input and convert it into a clear and actionable intents, allowing the platform to provide accurate and relevant responses or take the necessary actions
+3. **Intent Blockchain Server**
+   The Intent Blockchain Server is the backbone of Zizza's infrastructure, providing a secure  platform for is an application designed to handle operations such as wallet creation, deposit, swap, withdrawal, send and balance management based on user intents. It serves as a core component of the system architecture, ensuring efficient and secure transaction processing
+
+![ZizZA Agent Team](/docs/img/zizza_scheme.png)
+
+
+## UI: A Conversational AI Interface 
+Our goal is to provide a seamless and intuitive user experience, similar to that of ChatGPT, where users can engage in natural-sounding conversations with our AI team.
+
+![ZizZA Agent Team](/docs/img/ux_owui.png)
+
+### Key Features
+* **Conversational** Interface : Engage in chat-like conversations with our AI model, using a simple and intuitive text-based interface.
+* **Open Web UI** : Built on top of the [Open Web UI framework](https://github.com/open-webui/open-webui), ensuring a fast, responsive, and scalable architecture.
+* **Customizable** : Easily customize the interface to suit your needs, with a wide range of configuration options available.
+
+
 
 **The AI Team: How it Works**
 --------------------------------------
