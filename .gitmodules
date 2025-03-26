@@ -1,3 +1,4 @@
 [submodule "backend/open_webui/zizza"]
 	path = backend/open_webui/zizza
 	url = https://github.com/wh00hw/zizza-backend.git
+    branch = master
