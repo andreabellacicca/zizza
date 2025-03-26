@@ -146,7 +146,11 @@ def execute(cmd, token):
             done = True
     print(f"Done: {check_json}")
     for result in check_json['results']:
-        text = f"## {result['command']}\n{result['result']}\n\n"
+        error = ""
+        if 'error' in result:
+            text = f"## {result['command']} - FAILED\n{result['error']}\n\n"
+        else:
+            text = f"## {result['command']}\n{result['result']}\n\n"
         chunk = _create_packet(i, text, "ZizZA")
         yield f"data: {json.dumps(chunk)}\n\n"
     yield "data: [DONE]\n\n"
