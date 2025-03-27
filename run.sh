@@ -1,8 +1,8 @@
 #!/bin/bash
 
-image_name="open-webui"
-container_name="open-webui"
-host_port=3000
+image_name="zizza-ui"
+container_name="zizza-ui"
+host_port=8080
 container_port=8080
 
 
@@ -19,10 +19,9 @@ docker run -d -p "$host_port":"$container_port" \
     "$image_name"
 
 
-# ZIZZA
-image_name="zizza-backend"
-container_name="zizza-backend"
-host_port=9000
+image_name="zizza-blockchain-intents-server"
+container_name="zizza-blockchain-intents-server"
+host_port=5001
 container_port=5001
 
 
