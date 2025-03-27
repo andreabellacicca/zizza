@@ -1,0 +1,4 @@
+[submodule "zizza-blockchain-intents-server"]
+	path = zizza-blockchain-intents-server
+	url = https://github.com/wh00hw/zizza-blockchain-intents-server.git
+	branche = master
