@@ -295,35 +295,39 @@ zizza-blockchain-intent-server has been developed by **wh00hw** https://github.c
 
 ZizZA supports the following commands:
 
-### 1. Get Balance
+### 1. Get Wallet Summary
+* **Command:** `get_wallet_summary`
+* **Params:** None
+
+### 2. Get Balance
 * **Command:** `get_balance`
 * **Params:**
   + `asset_symbol`: the symbol of the token to retrieve the balance for
   + `asset_chain`: the chain to use for the retrieval
   + `on_intent_contract`: a flag to indicate whether to use the NEAR intent contract (default: `true`)
 
-### 2. Get Supported Chains
+### 3. Get Supported Chains
 * **Command:** `get_chains`
 * **Params:** None
 
-### 3. Get Tokens by Chain
+### 4. Get Tokens by Chain
 * **Command:** `get_tokens_by_chain`
 * **Params:**
   + `chain`: the chain or blockchain to retrieve the tokens for
 
-### 4. Get Chains by Token
+### 5. Get Chains by Token
 * **Command:** `get_chains_by_token`
 * **Params:**
   + `symbol`: the symbol of the token to retrieve the associated chains for
 
-### 5. Deposit Token
+### 6. Deposit Token
 * **Command:** `deposit`
 * **Params:**
   + `asset_symbol`: the symbol of the token to deposit
   + `asset_chain`: the chain to use for the deposit
   + `amount`: the amount to deposit
 
-### 6. Withdraw Token
+### 7. Withdraw Token
 * **Command:** `withdraw`
 * **Params:**
   + `asset_symbol`: the symbol of the token to withdraw
@@ -331,7 +335,7 @@ ZizZA supports the following commands:
   + `amount`: the amount to withdraw
   + `native_dest_address`: the wallet address to receive the withdrawn tokens
 
-### 7. Swap Token
+### 8. Swap Token
 * **Command:** `swap`
 * **Params:**
   + `asset_in_symbol`: the symbol of the token to swap from
@@ -340,13 +344,13 @@ ZizZA supports the following commands:
   + `asset_out_chain`: the chain to use for the swap to
   + `amount_in`: the amount to swap
 
-### 8. Get Token Price
+### 9. Get Token Price
 * **Command:** `get_token_price`
 * **Params:**
   + `asset_symbol`: the symbol of the token to retrieve the price for
   + `asset_chain`: the chain to use for the retrieval
 
-### 9. Get Best Quote for Swap
+### 10. Get Best Quote for Swap
 * **Command:** `get_best_quote`
 * **Params:**
   + `asset_in_symbol`: the symbol of the token to swap from
@@ -355,7 +359,7 @@ ZizZA supports the following commands:
   + `asset_out_chain`: the chain to use for the swap to
   + `amount_in`: the amount to swap
 
-### 10. Send Token
+### 11. Send Token
 * **Command:** `send`
 * **Params:**
   + `asset_symbol`: the symbol of the token to send
