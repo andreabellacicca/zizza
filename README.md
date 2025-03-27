@@ -20,7 +20,7 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
   + [Step 2: Start a Conversation with the Agent](#step-2-start-a-conversation-with-the-agent)
   + [Configuring Connection to Compai and Using ZizZA Team](#configuring-connection-to-compai-and-using-zizza-team)
 * [**Tips and Reminders**](#tips-and-reminders) 
-* [**Using Natural Language to Interact with ZizZA**](#using-natural-language-to-interact-with-zizza)ù
+* [**Using Natural Language to Interact with ZizZA**](#using-natural-language-to-interact-with-zizza)
 * [**Components of Zizza**](#components-of-zizza)
 * [**UI: A Conversational AI Interface**](#ui-a-conversational-ai-interface)
 * [**The AI Team: How it Works**](#the-ai-team-how-it-works)
