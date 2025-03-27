@@ -21,16 +21,17 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
   + [How the AI Team Works](#how-the-ai-team-works)
   + [Built with Compai](#built-with-compai)
 * [**Supported Commands**](#supported-commands)
-  + [1. Get Balance](#1-get-balance)
-  + [2. Get Supported Chains](#2-get-supported-chains)
-  + [3. Get Tokens by Chain](#3-get-tokens-by-chain)
-  + [4. Get Chains by Token](#4-get-chains-by-token)
-  + [5. Deposit Token](#5-deposit-token)
-  + [6. Withdraw Token](#6-withdraw-token)
-  + [7. Swap Token](#7-swap-token)
-  + [8. Get Token Price](#8-get-token-price)
-  + [9. Get Best Quote for Swap](#9-get-best-quote-for-swap)
-  + [10. Send Token](#10-send-token)
+  + [1. Get Wallet Summary](#1-get-wallet-summary)
+  + [2. Get Balance](#2-get-balance)
+  + [3. Get Supported Chains](#3-get-supported-chains)
+  + [4. Get Tokens by Chain](#4-get-tokens-by-chain)
+  + [5. Get Chains by Token](#5-get-chains-by-token)
+  + [6. Deposit Token](#6-deposit-token)
+  + [7. Withdraw Token](#7-withdraw-token)
+  + [8. Swap Token](#8-swap-token)
+  + [9. Get Token Price](#9-get-token-price)
+  + [10. Get Best Quote for Swap](#10-get-best-quote-for-swap)
+  + [11. Send Token](#11-send-token)
 
 
 **Key Features**
@@ -47,7 +48,7 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
 * **Support for Zcash transactions**: ZizZA supports ZEC transfers, including:  
   + **NU6**: support for the NU6 network upgrade, enabling enhanced privacy and efficiency  
   + **Inter-address transfers**: seamless transfers between **Transparent**, **Sapling**, and **Unified Addresses**, ensuring compatibility and enhanced privacy  
-  + **Auto-shielding**: automatically convert transparent ZEC into shielded funds for better privacy  
+  + **Shielding**: ZizZa allows you to seamlessly convert transparent ZEC into shielded funds, enhancing your privacy.
 
 * **Cross-chain interoperability**:  
   + ZizZA leverages **OmniBridge** as a cross-chain protocol to facilitate **native ZEC deposits** and support transactions across multiple blockchain networks  
@@ -76,6 +77,14 @@ Using ZizZA provides several benefits, including:
 * **Increased Accessibility** : ZizZA's natural language interface makes it easy for anyone to interact with the NEAR and Zcash networks, regardless of their technical expertise or experience with blockchain technology.
 * **Flexibility** : ZizZA can be used in a variety of scenarios, from simple transactions to complex smart contract interactions, making it a versatile tool for anyone looking to interact with the NEAR blockchain.
 * **Decentralization** : ZizZA allows you to interact with the NEAR and Zcash blockchains in a decentralized manner, without relying on centralized services or intermediaries.
+
+## How to run ZizZa locally
+
+Make sure you have Docker installed.
+
+```bash
+./run.sh
+```
 
 ## Using ZizZA
 

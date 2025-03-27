@@ -6,7 +6,7 @@ host_port=3000
 container_port=8080
 
 
-docker build -t "$image_name" .
+docker build -t "$image_name" zizza-ui
 docker stop "$container_name" &>/dev/null || true
 docker rm "$container_name" &>/dev/null || true
 
@@ -26,7 +26,7 @@ host_port=9000
 container_port=5001
 
 
-docker build -t "$image_name" backend/open_webui/zizza
+docker build -t "$image_name" zizza-blockchain-intents-server
 docker stop "$container_name" &>/dev/null || true
 docker rm "$container_name" &>/dev/null || true
 
