@@ -360,5 +360,14 @@ class UsersTable:
                 except Exception:
                     return False
 
+    def update_user_zec_address_by_id(self, id: str, zec_ua: str):
+        try:
+            with get_db() as db:
+                result = db.query(User).filter_by(id=id).update({"zec_ua": zec_ua})
+                db.commit()
+                return True if result == 1 else False
+        except Exception:
+            return False
+
 
 Users = UsersTable()

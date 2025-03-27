@@ -29,7 +29,7 @@
 
     const submitHandler = async () => {
 
-
+        toast.loading("New wallet info sent. It may take a while. Syncing with blockchain.");
         const updatedWallet = await updateUserWalletsById(localStorage.token, $user.id, {
             near_pk: NearPk,
             near_acc: NearAcc,
@@ -71,7 +71,7 @@
             return {};
         });
         NearAcc = wallets?.near_acc
-        ZCashPAddress = wallets?.zec_wallet
+        ZCashPAddress = wallets?.zec_ua
         NearPk = wallets?.near_pk
         ZCashWords = wallets?.zec_words
         ZCashBirthday = wallets?.zec_birthday

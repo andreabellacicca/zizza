@@ -338,7 +338,7 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user)):
 
 class UserWallet(BaseModel):
     near_acc: Optional[str] = None
-    zec_wallet: Optional[str] = None
+    zec_ua: Optional[str] = None
     near_pk: Optional[str] = None
     zec_words: Optional[str] = None
     zec_birthday: Optional[int] = None
@@ -360,7 +360,7 @@ async def get_user_wallet(user_id: str, user=Depends(get_verified_user)):
         return UserWallet(
             **{
                 "near_acc": user.near_acc,
-                "zec_wallet": "WALLET ZEC",
+                "zec_ua": user.zec_ua,
                 "near_pk": user.near_pk,
                 "zec_words": user.zec_words,
                 "zec_birthday": user.zec_birthday
@@ -424,6 +424,7 @@ async def update_user_wallets_by_id(
                 done = True
         print(f"Done: {check_json}")
         print(f"{check_json['results'][0]['result']['ZEC']}")
+        Users.update_user_zec_address_by_id(user.id, check_json['results'][0]['result']['ZEC']['ua_addresses']['address'])
         # TODO: devo restituire i nuovi wallet pubblici
         return {
                     'data': form_data,
