@@ -131,7 +131,15 @@ def execute(cmd, token):
     cmds = cmds[1]
     print(f"Cmds: {cmds}")
     i = 0
-    cmds_dict = json.loads(cmds)
+    try:
+        cmds_dict = json.loads(cmds)
+    except Exception:
+        chunk = _create_packet(i, "There was an error while analyzing the command\n", "ZizZA")
+        yield f"data: {json.dumps(chunk)}\n\n"
+        chunk = _create_packet(i+1, cmds, "ZizZA")
+        yield f"data: {json.dumps(chunk)}\n\n"
+        yield "data: [DONE]\n\n"
+        return
     response = r.post("http://localhost:5001/execute", json=cmds_dict)
     resp = response.json()
     done = False
