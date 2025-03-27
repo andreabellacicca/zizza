@@ -12,7 +12,7 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
 ----------------
 * [**Key Features**](#key-features)
 * [**How ZizZA Works**](#how-zizza-works)
-* [**How to run ZizZa locally**](#how-to-run-zizza-locally)
+* [**How to run ZizZA locally**](#how-to-run-zizza-locally)
 * [**Benefits of ZizZA**](#benefits-of-zizza)
 * [**Using Natural Language to Interact with ZizZA**](#using-natural-language-to-interact-with-zizza)
 * [**The AI Team: How it Works**](#the-ai-team-how-it-works)
@@ -81,6 +81,9 @@ Using ZizZA provides several benefits, including:
 
 ## How to run ZizZa locally
 
+```bash
+git clone --recurse-submodules https://github.com/andreabellacicca/zizza.git
+```
 Make sure you have Docker installed.
 
 ```bash
@@ -128,13 +131,6 @@ Note: The agent will respond accordingly based on the commands you provide.
 * Be careful when entering your private keys and wallet addresses, as they are sensitive information.
 * If you have any issues or concerns, refer to the [list the troubleshooting or support resources, e.g. FAQ, support email, etc.].
 
-## Installation
-Follow these steps to install ZizZA as a dockerfrom terminal:
-1. git clone https://github.com/andreabellacicca/zizza.git
-2. cd zizza
-3. git submodule update --remote --recursive
-4. ./run.sh
-
 **Using Natural Language to Interact with ZizZA**
 ----------------------
 ZizZA allows you to interact with the NEAR and Zcash blockchains using natural language commands. You can phrase your requests in a way that feels most natural to you, and ZizZA will understand what you want to do.
@@ -173,13 +169,13 @@ Moreover, ZizZA can concatenate multiple commands, allowing the user to execute 
 3. **Intent Blockchain Server**
    The Intent Blockchain Server is the backbone of Zizza's infrastructure, providing a secure  platform for is an application designed to handle operations such as wallet creation, deposit, swap, withdrawal, send and balance management based on user intents. It serves as a core component of the system architecture, ensuring efficient and secure transaction processing
 
-![ZizZA Agent Team](/docs/img/zizza_scheme.png)
+![ZizZA Agent Team](zizza-ui/docs/img/zizza_scheme.png)
 
 
 ## UI: A Conversational AI Interface 
 Our goal is to provide a seamless and intuitive user experience, similar to that of ChatGPT, where users can engage in natural-sounding conversations with our AI team.
 
-![ZizZA Agent Team](/docs/img/ux_owui.png)
+![ZizZA Agent Team](zizza-ui/docs/img/ux_owui.png)
 
 ### Key Features
 * **Conversational** Interface : Engage in chat-like conversations with our AI model, using a simple and intuitive text-based interface.
@@ -190,7 +186,7 @@ Our goal is to provide a seamless and intuitive user experience, similar to that
 
 **The AI Team: How it Works**
 --------------------------------------
-![ZizZA Agent Team](/docs/img/zizza_team.png)
+![ZizZA Agent Team](zizza-ui/docs/img/zizza_team.png)
 
 The AI team of ZizZA is composed of three LLM (Large Language Model) assistants based on LLaMA 70B, each with a specific and complementary role. This team works together to provide a seamless user experience and support interactions with the NEAR blockchain.
 
@@ -276,9 +272,9 @@ You can learn more about Compai and its features at [Compai](www.compai.team) (w
 
 By building the ZizZA AI team with Compai, we were able to create a highly effective and efficient AI team that provides a seamless user experience and supports interactions with the NEAR blockchain.
 
-## zizza-blockchain-intent-server: How it works
+## zizza-blockchain-intents-server: How it works
 
-**zizza-blockchain-intent-server** is an application designed to handle operations such as **wallet creation, deposit, swap, withdrawal, send and balance management** based on user intents. It serves as a **core component** of the system architecture, ensuring efficient and secure transaction processing.
+**zizza-blockchain-intents-server** is an application designed to handle operations such as **wallet creation, deposit, swap, withdrawal, send and balance management** based on user intents. It serves as a **core component** of the system architecture, ensuring efficient and secure transaction processing.
 
 ### Main Features
 
@@ -297,7 +293,7 @@ By building the ZizZA AI team with Compai, we were able to create a highly effec
 
 ### Contributing
 
-zizza-blockchain-intent-server has been developed by **wh00hw** https://github.com/wh00hw/zizza-backend/tree/master
+[zizza-blockchain-intents-server](https://github.com/wh00hw/zizza-blockchain-intents-server) has been developed by **wh00hw**
 
 
 **Supported Commands**
