@@ -1,5 +1,5 @@
 # :princess: Introducing ZizZA: Your AI-Powered NEAR and Zcash Transaction Assistant
-**Zizza is zer ZCash Agent**
+**Zizza is zer Zcash Agent**
 ----------------
 
 ZizZA is an AI agent team that enables users to execute transactions on the NEAR and Zcash blockchains using intents and natural language commands. Our goal is to make interacting with the blockchain simpler and more accessible to everyone.
