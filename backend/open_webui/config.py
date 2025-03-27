@@ -109,6 +109,13 @@ DEFAULT_CONFIG = {
         "prompt_suggestions": [
             {
                 "title": [
+                    "Show me the available commands",
+                    "that I can ask to ZizZA",
+                ],
+                "content": "Show me the available commands and the info I should gave",
+            },
+            {
+                "title": [
                     "Show me the available chains",
                     "in the NEAR ecosystem",
                 ],
@@ -774,7 +781,9 @@ GEMINI_API_BASE_URL = os.environ.get("GEMINI_API_BASE_URL", "")
 
 
 if OPENAI_API_BASE_URL == "":
-    OPENAI_API_BASE_URL = "https://api.openai.com/v1"
+    OPENAI_API_BASE_URL = "https://www.compai.team/api/v1/owui"
+if OPENAI_API_KEY == "":
+    OPENAI_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjNjg4YzcwMS05MTRkLTQ2NzktOWY5Ny1iZGZkYmE5NmMyZjEiLCJub25jZSI6ImM4ZGE5MWE0LThiYTMtNDRhMi1iMDZmLWVjZGNhOGQzNmQ2NSIsImV4cCI6MTc0MzY3MDQxMn0.-U6ThgBlsNQ9d93PHQnOKDK-cHB_wwR8S4OkMQlegKc"
 
 OPENAI_API_KEYS = os.environ.get("OPENAI_API_KEYS", "")
 OPENAI_API_KEYS = OPENAI_API_KEYS if OPENAI_API_KEYS != "" else OPENAI_API_KEY
