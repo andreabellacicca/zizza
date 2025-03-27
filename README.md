@@ -12,6 +12,7 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
 ----------------
 * [**Key Features**](#key-features)
 * [**How ZizZA Works**](#how-zizza-works)
+* * [**How to run ZizZa locally**](#how-to-run-zizza-locally)
 * [**Benefits of ZizZA**](#benefits-of-zizza)
 * [**Using Natural Language to Interact with ZizZA**](#using-natural-language-to-interact-with-zizza)
 * [**The AI Team: How it Works**](#the-ai-team-how-it-works)
