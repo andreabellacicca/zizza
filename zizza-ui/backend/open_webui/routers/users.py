@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 import time
-
+import os
 from open_webui.models.auths import Auths
 from open_webui.models.chats import Chats
 from open_webui.models.users import (
@@ -21,6 +21,8 @@ from open_webui.utils.auth import get_admin_user, get_password_hash, get_verifie
 
 from mnemonic import Mnemonic
 import requests as r
+
+ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST = os.getenv("ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST", "localhost")
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
@@ -411,13 +413,13 @@ async def update_user_wallets_by_id(
                 "zec_wallet_birthday": user_new.zec_birthday
             }}
         ]
-        response = r.post("http://localhost:5001/execute", json=data)
+        response = r.post(f"http://{ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST}:5001/execute", json=data)
         resp = response.json()
 
         done = False
         while not done:
             time.sleep(1)
-            check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
+            check_response = r.get(f"http://{ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST}:5001/status/{resp['task_id']}")
             check_json = check_response.json()
             print(f"Response: {check_json}")
             if not 'Processing' in check_json['status']:

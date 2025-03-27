@@ -5,7 +5,7 @@ import time
 import math
 import json
 import requests as r
-
+import os
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
@@ -17,6 +17,9 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from open_webui.env import SRC_LOG_LEVELS
 from open_webui.utils.auth import get_admin_user, get_password_hash, get_verified_user
+
+ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST = os.getenv("ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST", "localhost")
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -141,7 +144,7 @@ def execute(cmd, token):
         yield "data: [DONE]\n\n"
         return
     try:
-        response = r.post("http://localhost:5001/execute", json=cmds_dict)
+        response = r.post(f"http://{ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST}:5001/execute", json=cmds_dict)
     except Exception:
         chunk = _create_packet(i+1, "I'm not able to contact the intent server. Please, verify the connection", "ZizZA")
         yield f"data: {json.dumps(chunk)}\n\n"
@@ -153,14 +156,8 @@ def execute(cmd, token):
     yield f"data: {json.dumps(chunk)}\n\n"
     while not done:
         time.sleep(1)
-        try:
-            check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
-            check_json = check_response.json()
-        except Exception:
-            chunk = _create_packet(i+1, "I'm not able to contact the intent server to check status. Please, verify the connection", "ZizZA")
-            yield f"data: {json.dumps(chunk)}\n\n"
-            yield "data: [DONE]\n\n"
-            return
+        check_response = r.get(f"http://{ZIZZA_BLOCKCHAIN_INTENTS_SERVER_HOST}:5001/status/{resp['task_id']}")
+        check_json = check_response.json()
         print(f"Response: {check_json}")
         if not 'Processing' in check_json['status']:
             done = True

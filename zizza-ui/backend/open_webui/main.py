@@ -391,7 +391,7 @@ print(
 ░▒▓████████▓▒░▒▓█▓▒░▒▓████████▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░ 
 
 v{VERSION} - building the best AI Agent.
-POWERED BY COMPAI (www.compai.team) and Wh00hw (https://github.com/wh00hw)
+POWERED BY COMPAI (www.compai.team) and wh00hw (https://github.com/wh00hw)
 {f"Commit: {WEBUI_BUILD_HASH}" if WEBUI_BUILD_HASH != "dev-build" else ""}
 https://github.com/andreabellacicca/zizza/tree/master
 """
