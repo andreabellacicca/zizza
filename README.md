@@ -12,8 +12,13 @@ ZizZA can concatenate multiple commands, allowing the user to execute complex ta
 ----------------
 * [**Key Features**](#key-features)
 * [**How ZizZA Works**](#how-zizza-works)
-* [**How to run ZizZA locally**](#how-to-run-zizza-locally)
 * [**Benefits of ZizZA**](#benefits-of-zizza)
+* [**Using ZizZA**](#using-zizza)
+  + [Step 0: Create Admin Account (First-Time Login Only)](#step-0-create-admin-account-first-time-login-only)
+  + [Step 1: Setup Your Wallet](#step-1-setup-your-wallet)
+  + [Step 2: Start a Conversation with the Agent](#step-2-start-a-conversation-with-the-agent)
+  + [4. Get Tokens by Chain](#4-get-tokens-by-chain)
+  + [5. Get Chains by Token](#5-get-chains-by-token)
 * [**Using Natural Language to Interact with ZizZA**](#using-natural-language-to-interact-with-zizza)
 * [**The AI Team: How it Works**](#the-ai-team-how-it-works)
   + [Assistant 1: ZizZA Help Desk](#assistant-1-zizza-help-desk)
@@ -90,6 +95,7 @@ Make sure you have Docker installed.
 ./run.sh
 ```
 
+
 ## Using ZizZA
 
 To use the ZizZA agent, open your browser on localhost:8080 (default configuration) and follow these steps:
@@ -124,6 +130,33 @@ To use the ZizZA agent, open your browser on localhost:8080 (default configurati
 	* [List the available commands, e.g. "send NEAR", "send Zcash", "check balance", etc.]
 
 Note: The agent will respond accordingly based on the commands you provide.
+
+### Configuring Connection to Compai and Using ZizZA Team
+
+By default, the connection to Compai should be already set up. However, if you need to configure it manually, follow these steps:
+
+#### Step 1: Access Administrator Settings
+
+Go to **Administrator Settings** to configure the connection.
+
+#### Step 2: Add a New Connection
+
+In the Administrator Settings, navigate to **Connections** and click on **Add a new connection**.
+
+#### Step 3: Select OpenAI Connection Type
+
+Select **OpenAI** as the connection type.
+
+#### Step 4: Configure Connection Settings
+
+* Set the **URL** to: `https://www.compai.team/api/v1/owui`
+* For the **Token**, you will need to request one from `info@compai.team` or sign up for a free account on Compai to obtain it.
+
+#### Step 5: Verify the Connection
+
+Once you have entered the URL and token, **verify the connection** to ensure it is working correctly.
+
+By following these steps, you should be able to configure the connection to Compai and start using the ZizZA team. If you encounter any issues, please don't hesitate to reach out to `info@compai.team` for assistance.
 
 ## Tips and Reminders
 
