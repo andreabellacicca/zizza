@@ -140,15 +140,27 @@ def execute(cmd, token):
         yield f"data: {json.dumps(chunk)}\n\n"
         yield "data: [DONE]\n\n"
         return
-    response = r.post("http://localhost:5001/execute", json=cmds_dict)
+    try:
+        response = r.post("http://localhost:5001/execute", json=cmds_dict)
+    except Exception:
+        chunk = _create_packet(i+1, "I'm not able to contact the intent server. Please, verify the connection", "ZizZA")
+        yield f"data: {json.dumps(chunk)}\n\n"
+        yield "data: [DONE]\n\n"
+        return
     resp = response.json()
     done = False
     chunk = _create_packet(i, "Executing operations\n", "ZizZA")
     yield f"data: {json.dumps(chunk)}\n\n"
     while not done:
         time.sleep(1)
-        check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
-        check_json = check_response.json()
+        try:
+            check_response = r.get(f"http://localhost:5001/status/{resp['task_id']}")
+            check_json = check_response.json()
+        except Exception:
+            chunk = _create_packet(i+1, "I'm not able to contact the intent server to check status. Please, verify the connection", "ZizZA")
+            yield f"data: {json.dumps(chunk)}\n\n"
+            yield "data: [DONE]\n\n"
+            return
         print(f"Response: {check_json}")
         if not 'Processing' in check_json['status']:
             done = True
