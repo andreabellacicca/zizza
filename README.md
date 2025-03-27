@@ -156,7 +156,7 @@ Select **OpenAI** as the connection type.
 
 #### Step 4: Configure Connection Settings
 
-* Set the **URL** to: `https://www.compai.team/api/v1/owui`
+* Set the **URL** to: `https://www.zizza.xyz/api/v1/zizza`
 * For the **Token**, you will need to request one from `info@compai.team` or sign up for a free account on Compai to obtain it.
 
 #### Step 5: Verify the Connection
