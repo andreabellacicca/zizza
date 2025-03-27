@@ -5,7 +5,7 @@
 ZizZA is an AI agent team that enables users to execute transactions on the NEAR and Zcash blockchains using intents and natural language commands. Our goal is to make interacting with the blockchain simpler and more accessible to everyone.
 ZizZA can concatenate multiple commands, allowing the user to execute complex tasks.
 
-![ZizZA Agent Team](/docs/img/zizza_wallpaper.jpeg)
+![ZizZA Agent Team](zizza-ui/docs/img/zizza_wallpaper.jpeg)
 
 
 **Table of Contents**
